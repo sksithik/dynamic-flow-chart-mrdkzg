@@ -1,0 +1,36 @@
+<div class="hv-item">
+	<div class="hv-item-parent" *ngIf="node.children.length > 0 && !shouldHideChildren(node.id)">
+    <div  (click)="nodeClicked(node.id, node, $event)"  (mousedown)="mouseDown(node.id, node, $event)" (mouseup)="mouseUp(node.id, node, $event)" [ngClass]="node.id == getSelectedNodeID() ? 'simple-card-highlighted': 'simple-card-not-highlighted'">
+        <div class="popoverbox" (mouseleave)="mouseLeave(node.id, $event)" (mouseenter)="mouseEnter(node.id, $event)">
+            <div [ngClass]="shouldShowPopup(node.id) ? 'popupdescription':'invispopupdescription'">{{node.description}}</div>
+        </div>
+        <button id="addbutton" class="add-button"(click)='addChild(node.id)'></button>
+        <button id="expandbutton" class="expand-button rotated-button"(click)='hideChilren(node.id)'></button>
+        <div>{{node.name}}</div>
+    </div>
+
+  </div>
+  <div class="hv-item-children" *ngIf="node.children.length > 0 && shouldHideChildren(node.id)">
+      <div (click)="nodeClicked(node.id, node, $event)"  (mousedown)="mouseDown(node.id, node, $event)" (mouseup)="mouseUp(node.id, node, $event)" [ngClass]="node.id == getSelectedNodeID() ? 'simple-card-highlighted': 'simple-card-not-highlighted'">
+          <div class="popoverbox" (mouseleave)="mouseLeave(node.id, $event)" (mouseenter)="mouseEnter(node.id, $event)">
+              <div [ngClass]="shouldShowPopup(node.id) ? 'popupdescription':'invispopupdescription'">{{node.description}}</div>
+          </div>
+          <button id="expandbutton" class="expand-button-2"(click)='hideChilren(node.id)'></button>
+          <div>{{node.name}}</div>
+      </div>
+  </div>
+	<div class="hv-item-children" *ngIf="node.children.length > 0 && !shouldHideChildren(node.id)">
+    <div class="hv-item-child onlyfirst" *ngFor="let child of node.children">
+        <app-node *ngIf="child.children.length > 0" [node]="child"></app-node>
+        <div class="hv-item" *ngIf="child.children.length == 0">
+            <div (mouseleave)="mouseLeave(child.id, $event)" (mouseenter)="mouseEnter(child.id, $event)" (click)="nodeClicked(child.id, child, $event)"  (mousedown)="mouseDown(child.id, child, $event)" (mouseup)="mouseUp(child.id, child, $event)" [ngClass]="child.id == getSelectedNodeID() ? 'simple-card-highlighted': 'simple-card-not-highlighted'">
+                <div class="popoverbox" (mouseleave)="mouseLeave(child.id, $event)" (mouseenter)="mouseEnter(child.id, $event)">
+                    <div [ngClass]="shouldShowPopup(child.id) ? 'popupdescription':'invispopupdescription'">{{child.description}}</div>
+                </div>
+              <button id="addbutton" class="add-button"(click)='addChild(child.id)'></button>
+              <div>{{child.name}}</div>
+            </div>
+        </div>
+      </div>
+  </div>
+</div>
